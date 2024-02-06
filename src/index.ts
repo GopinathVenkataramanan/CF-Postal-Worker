@@ -13,6 +13,8 @@ app.use('*', (c, next) => {
 
 app.post('/send', async (c) => {
     const body = await c.req.parseBody()
+    //const body = await c.req.json()
+    
     if (!body['subject'] || !body['message']) {
         c.status(400)
         return c.json({
