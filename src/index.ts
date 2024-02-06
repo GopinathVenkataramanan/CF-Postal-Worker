@@ -13,7 +13,7 @@ app.use('*', (c, next) => {
 
 app.post('/send', async (c) => {
     const body = await c.req.parseBody()
-    if (!body['subject'] || !body['body']) {
+    if (!body['subject'] || !body['message']) {
         c.status(400)
         return c.json({
             "status": "error",
@@ -24,10 +24,10 @@ app.post('/send', async (c) => {
     const msg = createMimeMessage()
     msg.setSender({ name: c.env.SENDER_NAME, addr: c.env.SENDER_ADDRESS })
     msg.setRecipient(c.env.RECIPIENT_ADDRESS)
-    msg.setSubject(body['subject'])
+   // msg.setSubject(body['subject'])
     msg.addMessage({
         contentType: 'text/html',
-        data: body['body']
+        data: body['message']
     })
 
     var message = new EmailMessage(
